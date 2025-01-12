@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.StudentMapper">
+    <update id="update">
+        update student
+        <set>
+            <if test="sn != null and sn != ''">
+                sn = #{sn},
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender},
+            </if>
+            <if test="dormitory_dno != null and dormitory_dno != ''">
+                dormitory_dno = #{dormitory_dno},
+            </if>
+            <if test="maj != null and maj != ''">
+                maj = #{maj},
+            </if>
+        </set>
+        where sno = #{sno}
+    </update>
+
+    <select id="pageQuery" resultType="com.example.pojo.vo.StudentVO">
+        select a.sno, a.sn, a.gender, b.address, a.maj from student a left join dormitory b on a.dormitory_dno = b.dno
+        <where>
+            <if test="sno != null and sno != ''">
+                and a.sno like concat("%",#{sno},"%")
+            </if>
+            <if test="sn != null and sn != ''">
+                and a.sn like concat("%",#{sn},"%")
+            </if>
+        </where>
+        order by sno
+    </select>
+
+</mapper>

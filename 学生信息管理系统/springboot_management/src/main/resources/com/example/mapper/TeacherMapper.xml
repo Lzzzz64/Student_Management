@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.TeacherMapper">
+    <update id="update">
+        update teacher
+        <set>
+            <if test="tn != null and tn != ''">
+                tn = #{tn},
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender},
+            </if>
+            <if test="office != null and office != ''">
+                office = #{office},
+            </if>
+        </set>
+        where tno = #{tno}
+    </update>
+
+    <select id="pageQuery" resultType="com.example.pojo.vo.TeacherVO">
+        select tno,tn,gender,office from teacher
+        <where>
+            <if test="tno != null and tno != ''">
+                and tno like concat("%",#{tno},"%")
+            </if>
+            <if test="tn != null and tn != ''">
+                and tn like concat("%",#{tn},"%")
+            </if>
+        </where>
+        order by tno
+    </select>
+
+</mapper>

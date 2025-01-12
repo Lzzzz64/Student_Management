@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CourseMapper">
+    <update id="update">
+        update course
+        <set>
+            <if test="cn != null and cn != ''">
+                cn = #{cn},
+            </if>
+            <if test="time != null and time != ''">
+                time = #{time},
+            </if>
+            <if test="score != null and score != ''">
+                score = #{score},
+            </if>
+            <if test="classroom != null and classroom != ''">
+                classroom = #{classroom},
+            </if>
+            <if test="teacher_tno != null and teacher_tno != ''">
+                teacher_tno = #{teacher_tno},
+            </if>
+            <if test="number != null and number != ''">
+                number = #{number},
+            </if>
+        </set>
+        where cno = #{cno}
+    </update>
+
+    <select id="pageQuery" resultType="com.example.pojo.entity.Course">
+        select * from course
+        <where>
+            <if test="cno != null and cno != ''">
+                and cno like concat("%",#{cno},"%")
+            </if>
+            <if test="cn != null and cn != ''">
+                and cn like concat("%",#{cn},"%")
+            </if>
+        </where>
+        order by cno
+    </select>
+
+</mapper>
